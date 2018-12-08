@@ -1,11 +1,13 @@
-package utils;
+package htmlparser;
+
+import htmlparser.interfaces.ILinksValidation;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Utils {
-    public ArrayList<String> checkAllLinks(ArrayList<String> allLinks, String protocol, String domain) {
+public class LinksValidation implements ILinksValidation {
+    public ArrayList<String> getValidLinks(ArrayList<String> allLinks, String protocol, String domain) {
         String template = "/(ftp|http|https):\\/\\/(\\w+:?\\w*@)?(\\S+)(:[0-9]+)?(\\/|\\/([\\w#!:.?+=&%@!\\-\\/]))?/";
         Pattern pattern = Pattern.compile(template);
         ArrayList<String> resultArrayLinks = new ArrayList<String>();
