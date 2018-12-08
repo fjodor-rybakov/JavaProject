@@ -1,7 +1,6 @@
-package htmlparser.interfaces;
+package html_parser.interfaces;
 
-import htmlparser.models.ArgumentsParsedResult.ArgumentsParsedResult;
-
+import html_parser.models.arguments_parsed_result.ArgumentsParsedResult;
 import java.util.List;
 
 public interface IArgumentsParser {

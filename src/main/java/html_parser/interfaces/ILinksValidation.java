@@ -1,4 +1,4 @@
-package htmlparser.interfaces;
+package html_parser.interfaces;
 
 import java.util.ArrayList;
 

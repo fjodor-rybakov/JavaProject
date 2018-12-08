@@ -1,7 +1,6 @@
-package htmlparser;
+package html_parser;
 
-import htmlparser.interfaces.ILinksValidation;
-
+import html_parser.interfaces.ILinksValidation;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

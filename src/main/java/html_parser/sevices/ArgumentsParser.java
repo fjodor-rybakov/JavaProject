@@ -1,9 +1,9 @@
-package htmlparser.sevices;
+package html_parser.sevices;
 
-import htmlparser.interfaces.IArgumentsParser;
-import htmlparser.interfaces.IHtmlQueue;
-import htmlparser.models.ArgumentsParsedResult.ArgumentsParsedResult;
-import htmlparser.models.ArgumentsParsedResult.HtmlQueue;
+import html_parser.interfaces.IArgumentsParser;
+import html_parser.interfaces.IHtmlQueue;
+import html_parser.models.arguments_parsed_result.ArgumentsParsedResult;
+import html_parser.models.arguments_parsed_result.HtmlQueue;
 
 import java.util.List;
 
@@ -21,7 +21,6 @@ public class ArgumentsParser implements IArgumentsParser {
     ArgumentsParser() {
         this.htmlQueue = new HtmlQueue();
     }
-
 
     @Override
     public ArgumentsParsedResult getParsed(List<String> args) {
@@ -46,20 +45,20 @@ public class ArgumentsParser implements IArgumentsParser {
         return new ArgumentsParsedResult(htmlQueue, outFileName);
     }
 
-    private void locateArgument(String argumnet, ArgumentState state) {
+    private void locateArgument(String arguments, ArgumentState state) {
         switch (state) {
             case NoState:
                 throw new IllegalArgumentException("Print so: *.exe --files|--links <link|file...> --out report.csv");
             case Files:
-                htmlQueue.addFileName(argumnet);
+                htmlQueue.addFileName(arguments);
                 break;
             case Links:
-                htmlQueue.addLinkName(argumnet);
+                htmlQueue.addLinkName(arguments);
             case OutFile:
                 if (!outFileName.equals("")) {
                     throw new IllegalArgumentException("Out file can be only single");
                 }
-                outFileName = argumnet;
+                outFileName = arguments;
                 break;
         }
     }
