@@ -1,4 +1,4 @@
-package htmlparser.models;
+package html_parser.models;
 
 public class Link {
     private String name;

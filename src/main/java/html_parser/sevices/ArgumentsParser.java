@@ -1,9 +1,9 @@
-package htmlparser.sevices;
+package html_parser.sevices;
 
-import htmlparser.interfaces.IArgumentsParser;
-import htmlparser.interfaces.IHtmlQueue;
-import htmlparser.models.ArgumentsParsedResult.ArgumentsParsedResult;
-import htmlparser.models.ArgumentsParsedResult.HtmlQueue;
+import html_parser.interfaces.IArgumentsParser;
+import html_parser.interfaces.IHtmlQueue;
+import html_parser.models.arguments_parsed_result.ArgumentsParsedResult;
+import html_parser.models.arguments_parsed_result.HtmlQueue;
 
 import java.util.List;
 

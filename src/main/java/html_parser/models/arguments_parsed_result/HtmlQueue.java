@@ -1,6 +1,6 @@
-package htmlparser.models.ArgumentsParsedResult;
+package html_parser.models.arguments_parsed_result;
 
-import htmlparser.interfaces.IHtmlQueue;
+import html_parser.interfaces.IHtmlQueue;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

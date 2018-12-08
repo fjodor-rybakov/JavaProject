@@ -1,4 +1,4 @@
-package htmlparser.interfaces;
+package html_parser.interfaces;
 
 public interface IHtmlQueue {
     void addFileName(String fileName);

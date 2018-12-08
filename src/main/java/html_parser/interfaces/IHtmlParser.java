@@ -1,6 +1,6 @@
-package htmlparser.interfaces;
+package html_parser.interfaces;
 
-import htmlparser.models.Link;
+import html_parser.models.Link;
 import org.w3c.dom.Document;
 
 import java.util.List;
