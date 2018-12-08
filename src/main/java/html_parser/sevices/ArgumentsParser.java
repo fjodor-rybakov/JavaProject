@@ -45,20 +45,20 @@ public class ArgumentsParser implements IArgumentsParser {
         return new ArgumentsParsedResult(htmlQueue, outFileName);
     }
 
-    private void locateArgument(String arguments, ArgumentState state) {
+    private void locateArgument(String argument, ArgumentState state) {
         switch (state) {
             case NoState:
                 throw new IllegalArgumentException("Print so: *.exe --files|--links <link|file...> --out report.csv");
             case Files:
-                htmlQueue.addFileName(arguments);
+                htmlQueue.addFileName(argument);
                 break;
             case Links:
-                htmlQueue.addLinkName(arguments);
+                htmlQueue.addLinkName(argument);
             case OutFile:
                 if (!outFileName.equals("")) {
                     throw new IllegalArgumentException("Out file can be only single");
                 }
-                outFileName = arguments;
+                outFileName = argument;
                 break;
         }
     }

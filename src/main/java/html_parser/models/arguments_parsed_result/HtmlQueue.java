@@ -1,6 +1,7 @@
 package html_parser.models.arguments_parsed_result;
 
 import html_parser.interfaces.IHtmlQueue;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -9,8 +10,8 @@ public class HtmlQueue implements IHtmlQueue {
     private Queue<String> linkNames;
 
     public HtmlQueue() {
-        fileNames = new ArrayDeque<>();
-        linkNames = new ArrayDeque<>();
+        fileNames = new ArrayDeque<String>();
+        linkNames = new ArrayDeque<String>();
     }
 
     @Override
