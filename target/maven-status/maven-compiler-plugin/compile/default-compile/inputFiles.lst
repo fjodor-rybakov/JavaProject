@@ -1,0 +1,10 @@
+C:\JavaProject\src\main\java\html_parser\interfaces\IHtmlParser.java
+C:\JavaProject\src\main\java\html_parser\interfaces\ILinksValidation.java
+C:\JavaProject\src\main\java\html_parser\LinksValidation.java
+C:\JavaProject\src\main\java\html_parser\interfaces\IArgumentsParser.java
+C:\JavaProject\src\main\java\html_parser\Main.java
+C:\JavaProject\src\main\java\html_parser\sevices\ArgumentsParser.java
+C:\JavaProject\src\main\java\html_parser\models\arguments_parsed_result\ArgumentsParsedResult.java
+C:\JavaProject\src\main\java\html_parser\interfaces\IHtmlQueue.java
+C:\JavaProject\src\main\java\html_parser\models\Link.java
+C:\JavaProject\src\main\java\html_parser\models\arguments_parsed_result\HtmlQueue.java
