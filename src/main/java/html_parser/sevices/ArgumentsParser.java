@@ -22,7 +22,6 @@ public class ArgumentsParser implements IArgumentsParser {
         this.htmlQueue = new HtmlQueue();
     }
 
-
     @Override
     public ArgumentsParsedResult getParsed(List<String> args) {
         ArgumentState state = ArgumentState.NoState;
@@ -46,20 +45,20 @@ public class ArgumentsParser implements IArgumentsParser {
         return new ArgumentsParsedResult(htmlQueue, outFileName);
     }
 
-    private void locateArgument(String argumnet, ArgumentState state) {
+    private void locateArgument(String argument, ArgumentState state) {
         switch (state) {
             case NoState:
                 throw new IllegalArgumentException("Print so: *.exe --files|--links <link|file...> --out report.csv");
             case Files:
-                htmlQueue.addFileName(argumnet);
+                htmlQueue.addFileName(argument);
                 break;
             case Links:
-                htmlQueue.addLinkName(argumnet);
+                htmlQueue.addLinkName(argument);
             case OutFile:
                 if (!outFileName.equals("")) {
                     throw new IllegalArgumentException("Out file can be only single");
                 }
-                outFileName = argumnet;
+                outFileName = argument;
                 break;
         }
     }
