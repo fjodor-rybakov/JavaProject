@@ -7,6 +7,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import utils.Request;
 import utils.Response;
+import utils.StatusCodeRequest;
 import utils.interfaces.IResponse;
 
 import java.net.MalformedURLException;
@@ -33,7 +34,7 @@ public class HtmlParser implements IHtmlParser {
         List<Future<IResponse>> responseFutures = new ArrayList<>();
         for(String linkString: stringLinks) {
             try {
-                Future<IResponse> responseFuture = executor.submit(new Request(new URL(linkString)));
+                Future<IResponse> responseFuture = executor.submit(new StatusCodeRequest(new URL(linkString)));
                 responseFutures.add(responseFuture);
             } catch (MalformedURLException ignored) {
             }
