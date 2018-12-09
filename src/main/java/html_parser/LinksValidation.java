@@ -11,7 +11,7 @@ public class LinksValidation implements ILinksValidation {
     public ArrayList<String> getValidLinks(List<String> allLinks, String protocol, String domain) {
         String template = "/(ftp|http|https):\\/\\/(\\w+:?\\w*@)?(\\S+)(:[0-9]+)?(\\/|\\/([\\w#!:.?+=&%@!\\-\\/]))?/";
         Pattern pattern = Pattern.compile(template);
-        ArrayList<String> resultArrayLinks = new ArrayList<String>();
+        ArrayList<String> resultArrayLinks = new ArrayList<>();
         String restoringUrl;
 
         for (String item : allLinks) {
@@ -37,22 +37,26 @@ public class LinksValidation implements ILinksValidation {
     }
 
     private String restoreUrl(String url, String protocol, String domain) {
+        if (url.length() == 1 && url.charAt(0) == '/') {
+            return protocol + "://" + domain;
+        }
+
         if (url.charAt(0) == '.' && url.charAt(1) == '.') {
-            return protocol + "//" + domain + url.substring(2);
+            return protocol + "://" + domain + url.substring(2);
         }
 
         if (url.charAt(0) == '.') {
-            return protocol + "//" + domain + url.substring(1);
+            return protocol + "://" + domain + url.substring(1);
         }
 
         if (url.charAt(0) == '/' && url.charAt(1) == '/') {
-            return protocol + url;
+            return protocol + ":" + url;
         }
 
         if (url.charAt(0) == '/') {
-            return protocol + "//" + domain + url;
+            return protocol + "://" + domain + url;
         } else {
-            return protocol + "//" + domain + "/" + url;
+            return url;
         }
     }
 }
