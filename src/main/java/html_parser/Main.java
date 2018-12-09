@@ -18,14 +18,14 @@ import utils.interfaces.IResponse;
 
 public class Main {
     public static void main(String argc[]) {
-        ExecutorService executor = Executors.newFixedThreadPool(50);
-        LinksValidation linkValidation = new LinksValidation();
+        ExecutorService executor = Executors.newFixedThreadPool(10);
 
         try {
-            Future<IResponse> response = executor.submit(new Request(new URL("https://mail.ru/")));
+            URL url = new URL("https://mail.ru/");
+            Future<IResponse> response = executor.submit(new Request(url));
             IResponse result = response.get();
             Document doc = Jsoup.parse(result.getBody(), "UTF-8", "");
-            IHtmlParser htmlParser = new HtmlParser(executor);
+            IHtmlParser htmlParser = new HtmlParser(executor, new LinksValidation(), url);
             List<Link> links = htmlParser.getLinks(doc);
             for (Link link: links) {
                 System.out.println(link.getName() + " " + link.getStatus());
