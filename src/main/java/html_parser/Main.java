@@ -9,6 +9,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import html_parser.interfaces.IHtmlParser;
+import html_parser.models.Link;
+import html_parser.sevices.HtmlParser;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,21 +22,19 @@ import utils.interfaces.IResponse;
 
 public class Main {
     public static void main(String argc[]) {
-        ExecutorService executor = Executors.newFixedThreadPool(1);
+        ExecutorService executor = Executors.newFixedThreadPool(50);
         LinksValidation linkValidation = new LinksValidation();
 
         try {
             Future<IResponse> response = executor.submit(new Request(new URL("https://mail.ru/")));
-            Document doc = Jsoup.parse(response.get().getBody(), "UTF-8", "");
-            Elements links = doc.select("a");
-            List<String> linksStr = new ArrayList<>();
-            for (Element link : links) {
-                linksStr.add(link.attr("href"));
+            IResponse result = response.get();
+            Document doc = Jsoup.parse(result.getBody(), "UTF-8", "");
+            IHtmlParser htmlParser = new HtmlParser(executor);
+            List<Link> links = htmlParser.getLinks(doc);
+            for (Link link: links) {
+                System.out.println(link.getName() + " " + link.getStatus());
             }
-            linksStr = linkValidation.getValidLinks(linksStr, "https", "mail.ru");
-            for (String linkstr: linksStr) {
-                System.out.println(linkstr);
-            }
+            System.out.println(links.size());
         } catch (IOException | InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

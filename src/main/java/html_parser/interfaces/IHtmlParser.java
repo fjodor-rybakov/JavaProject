@@ -1,7 +1,8 @@
 package html_parser.interfaces;
 
 import html_parser.models.Link;
-import org.w3c.dom.Document;
+import org.jsoup.nodes.Document;
+
 import java.util.List;
 
 public interface IHtmlParser {
