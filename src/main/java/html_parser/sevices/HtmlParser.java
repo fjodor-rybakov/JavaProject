@@ -2,6 +2,7 @@ package html_parser.sevices;
 
 import html_parser.interfaces.IHtmlParser;
 import html_parser.interfaces.ILinksValidation;
+import html_parser.interfaces.IParam;
 import html_parser.models.Link;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,11 +24,15 @@ public class HtmlParser implements IHtmlParser {
     private ExecutorService executor;
     private ILinksValidation linksValidation;
     private URL url;
+    private IParam doc;
 
-    public HtmlParser(ExecutorService executor, ILinksValidation linksValidation, URL url) {
+    public HtmlParser(ExecutorService executor, ILinksValidation linksValidation, IParam param) throws Exception {
         this.executor = executor;
         this.linksValidation = linksValidation;
-        this.url = url;
+        doc = param;
+        if (param.getType().equals("link")) {
+            this.url = new URL(param.getName());
+        }
     }
 
     @Override
@@ -35,8 +40,11 @@ public class HtmlParser implements IHtmlParser {
         List<Link> result = new ArrayList<>();
 
         List<String> stringLinks = getStringLinks(html);
-        stringLinks = linksValidation.getValidLinks(stringLinks, url.getProtocol(), url.getHost());
-
+        if (doc.getType().equals("link")) {
+            stringLinks = linksValidation.getValidLinks(stringLinks, url.getProtocol(), url.getHost());
+        } else {
+            stringLinks = linksValidation.getValidLinks(stringLinks, "", "");
+        }
         List<Future<IResponse>> responseFutures = new ArrayList<>();
         for(String linkString: stringLinks) {
             try {

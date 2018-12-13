@@ -13,7 +13,7 @@ public class Link {
         return name;
     }
 
-    public  int getStatus() {
+    public int getStatus() {
         return status;
     }
 }
