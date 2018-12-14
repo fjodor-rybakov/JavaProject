@@ -1,10 +1,8 @@
 package html_parser;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
