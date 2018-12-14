@@ -1,33 +1,44 @@
 package html_parser.models;
 
+import java.util.List;
+import html_parser.Enums.ParamType;
 import html_parser.interfaces.IParam;
+import html_parser.interfaces.IParams;
 
 import java.util.ArrayList;
 
-public class Params {
-    private ArrayList<IParam> params = new ArrayList<>();
-    private String reportName = "report";
+public class Params implements IParams {
+    private List<IParam> params;
+    private String reportName = "";
 
     public Params(String[] args) {
-        String mode = "";
+        params = new ArrayList<>();
+        ParamType mode = null;
         for (String arg : args) {
             switch (arg) {
                 case ("--files"):
-                    mode = "file";
+                    mode = ParamType.File;
                     break;
                 case ("--links"):
-                    mode = "link";
+                    mode = ParamType.Link;
                     break;
                 case ("--out"):
-                    mode = "out";
+                    mode = ParamType.OutFile;
                     break;
-                default: addParam(arg, mode);
+                default:
+                    if (mode == null) {
+                        throw new IllegalArgumentException("Print so: *.exe --files|--links <link|file...> --out report.csv");
+                    }
+                    addParam(arg, mode);
             }
         }
     }
 
-    private void addParam(String value, String mode) {
-        if (mode.equals("out")) {
+    private void addParam(String value, ParamType mode) {
+        if (mode == ParamType.OutFile) {
+            if (!reportName.equals("")) {
+                throw new IllegalArgumentException("Out file can be only single");
+            }
             reportName = value.equals("") ? "report" : value;
             return;
         }
@@ -35,7 +46,7 @@ public class Params {
         params.add(param);
     }
 
-    public ArrayList<IParam> getParams() {
+    public List<IParam> getParams() {
         return params;
     }
 

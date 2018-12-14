@@ -1,17 +1,18 @@
 package html_parser.models;
 
+import html_parser.Enums.ParamType;
 import html_parser.interfaces.IParam;
 
 public class Param implements IParam {
-    private String type;
+    private ParamType type;
     private String name;
 
-    public Param(String name, String type) {
+    Param(String name, ParamType type) {
         this.name = name;
         this.type = type;
     }
 
-    public String getType() {
+    public ParamType getType() {
         return type;
     }
 

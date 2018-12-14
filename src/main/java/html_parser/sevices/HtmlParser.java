@@ -1,5 +1,6 @@
 package html_parser.sevices;
 
+import html_parser.Enums.ParamType;
 import html_parser.interfaces.IHtmlParser;
 import html_parser.interfaces.ILinksValidation;
 import html_parser.interfaces.IParam;
@@ -7,8 +8,6 @@ import html_parser.models.Link;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import utils.Request;
-import utils.Response;
 import utils.StatusCodeRequest;
 import utils.interfaces.IResponse;
 
@@ -23,28 +22,24 @@ import java.util.concurrent.Future;
 public class HtmlParser implements IHtmlParser {
     private ExecutorService executor;
     private ILinksValidation linksValidation;
-    private URL url;
-    private IParam doc;
 
-    public HtmlParser(ExecutorService executor, ILinksValidation linksValidation, IParam param) throws Exception {
+    public HtmlParser(ExecutorService executor, ILinksValidation linksValidation) {
         this.executor = executor;
         this.linksValidation = linksValidation;
-        doc = param;
-        if (param.getType().equals("link")) {
-            this.url = new URL(param.getName());
-        }
+
     }
 
-    @Override
-    public List<Link> getLinks(Document html) {
+    public List<Link> getLinks(Document html, IParam param) throws MalformedURLException {
         List<Link> result = new ArrayList<>();
 
         List<String> stringLinks = getStringLinks(html);
-        if (doc.getType().equals("link")) {
+        if (param.getType() == ParamType.Link) {
+            URL url = new URL(param.getName());
             stringLinks = linksValidation.getValidLinks(stringLinks, url.getProtocol(), url.getHost());
         } else {
             stringLinks = linksValidation.getValidLinks(stringLinks, "", "");
         }
+
         List<Future<IResponse>> responseFutures = new ArrayList<>();
         for(String linkString: stringLinks) {
             try {

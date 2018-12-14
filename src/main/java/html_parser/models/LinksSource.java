@@ -1,20 +1,24 @@
 package html_parser.models;
 
+import html_parser.interfaces.ILinksSource;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Source {
+public class LinksSource implements ILinksSource {
     private String name;
     private List<Link> brokenLinks = new ArrayList<>();
     private List<Link> normalLinks = new ArrayList<>();
     private List<Link> allLinks = new ArrayList<>();
 
 
-    public Source(String name) {
+    public LinksSource(String name) {
         this.name = name;
     }
 
     public void setLinks(List<Link> links) {
+        normalLinks.clear();
+        brokenLinks.clear();
         for (Link link : links) {
             if (link.getStatus() < 400) {
                 normalLinks.add(link);

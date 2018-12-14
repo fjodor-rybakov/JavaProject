@@ -16,7 +16,6 @@ public class Request implements IRequest {
         this.url = url;
     }
 
-    @Override
     public Response call() {
         writeResult();
         return new Response(body, url.toString(), statusCode);
