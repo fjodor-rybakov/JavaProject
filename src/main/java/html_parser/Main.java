@@ -42,6 +42,7 @@ public class Main {
             IParams params = new Params(args);
             IReport report = new Report(params.getReportName());
             Document doc = new Document("");
+
             for (IParam param : params.getParams()) {
                 LinksSource linksSource = new LinksSource(param.getName());
                 if (param.getType() == ParamType.Link) {
