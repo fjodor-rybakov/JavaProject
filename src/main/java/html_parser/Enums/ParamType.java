@@ -1,4 +1,4 @@
-package html_parser.Enums;
+package html_parser.enums;
 
 public enum ParamType {
     File,

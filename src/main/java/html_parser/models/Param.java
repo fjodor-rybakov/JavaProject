@@ -1,6 +1,6 @@
 package html_parser.models;
 
-import html_parser.Enums.ParamType;
+import html_parser.enums.ParamType;
 import html_parser.interfaces.IParam;
 
 public class Param implements IParam {

@@ -1,7 +1,7 @@
 package html_parser.models;
 
 import java.util.List;
-import html_parser.Enums.ParamType;
+import html_parser.enums.ParamType;
 import html_parser.interfaces.IParam;
 import html_parser.interfaces.IParams;
 

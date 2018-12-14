@@ -1,0 +1,3 @@
+<app-settings>
+    <thread-pools>3</thread-pools>
+</app-settings>

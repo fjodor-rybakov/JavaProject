@@ -1,6 +1,6 @@
 package html_parser.sevices;
 
-import html_parser.Enums.ParamType;
+import html_parser.enums.ParamType;
 import html_parser.interfaces.IHtmlParser;
 import html_parser.interfaces.ILinksValidation;
 import html_parser.interfaces.IParam;

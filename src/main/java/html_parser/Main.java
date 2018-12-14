@@ -7,7 +7,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import html_parser.Enums.ParamType;
+import app.AppBaseConsts;
+import app.Configuration;
+import app.interfaces.IConfiguration;
+import html_parser.enums.ParamType;
 import html_parser.interfaces.IHtmlParser;
 import html_parser.interfaces.IParam;
 import html_parser.interfaces.IParams;
@@ -24,10 +27,18 @@ import utils.interfaces.IResponse;
 
 public class Main {
     public static void main(String args[]) {
-        ExecutorService executor = Executors.newFixedThreadPool(10);
-        IHtmlParser htmlParser = new HtmlParser(executor, new LinksValidation());
-
         try {
+            IConfiguration configuration = new Configuration(AppBaseConsts.ConfigFileUri);
+            String threadsStr = configuration
+                    .getByTagName("app-settings")
+                    .get(0)
+                    .getByTagName("thread-pools")
+                    .get(0)
+                    .getBody();
+            int threads = Integer.parseInt(threadsStr);
+            ExecutorService executor = Executors.newFixedThreadPool(threads);
+            IHtmlParser htmlParser = new HtmlParser(executor, new LinksValidation());
+
             IParams params = new Params(args);
             IReport report = new Report(params.getReportName());
             Document doc = new Document("");
@@ -44,9 +55,9 @@ public class Main {
                 linksSource.setLinks(links);
                 report.printToReport(linksSource);
             }
+            executor.shutdown();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        executor.shutdown();
     }
 }
