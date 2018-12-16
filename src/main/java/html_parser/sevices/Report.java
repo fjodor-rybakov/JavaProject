@@ -1,60 +1,54 @@
 package html_parser.sevices;
 
-import com.opencsv.CSVWriter;
+import html_parser.enums.ParamType;
 import html_parser.interfaces.IReport;
 import html_parser.models.Link;
 import html_parser.models.LinksSource;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 
 public class Report implements IReport {
     private String fileName;
+    private LinksSource linksSource;
+    private FileWriter writer;
 
-    public Report(String filename) throws Exception {
-        this.fileName = filename + ".csv";
-        new CSVWriter(new FileWriter(fileName));
+    public Report(LinksSource source) throws Exception {
+        this.linksSource = source;
+        writer = new FileWriter(getFileName());
     }
 
-    public void printToReport(LinksSource linksSource) throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter(fileName,true));
+    private String getFileName() {
+        String filename = "";
+        if (linksSource.getType() == ParamType.Link) {
+            filename = linksSource.getName().split("//")[1].split("\\.")[0];
+        } else {
+            filename = linksSource.getName().split("\\.")[0];
+        }
+        filename += ".csv";
+        return filename;
+    }
+
+    public void printReport() throws Exception {
         List<Link> normalLinks = linksSource.getNormalLinks();
         List<Link> brokenLinks = linksSource.getBrokenLinks();
-        writer.writeNext(stringsToArr("Parent doc name: " + linksSource.getName()));
-        writer.writeNext(stringsToArr("All links quantity: " + linksSource.getAllLinks().size()));
 
         if (normalLinks.size() != 0) {
-            writer.writeNext(stringsToArr(""));
-            writer.writeNext(stringsToArr("Normal links"));
-            writer.writeNext(stringsToArr("quantity: " + normalLinks.size()));
-            writer.writeNext(stringsToArr(""));
-            writeLinksToFile(writer, normalLinks);
+            writeLinksToFile(normalLinks);
         }
 
         if (brokenLinks.size() != 0) {
-            writer.writeNext(stringsToArr(""));
-            writer.writeNext(stringsToArr("Broken links"));
-            writer.writeNext(stringsToArr("quantity: " + brokenLinks.size()));
-            writer.writeNext(stringsToArr(""));
-            writeLinksToFile(writer, brokenLinks);
+            writeLinksToFile(brokenLinks);
         }
-
-        writer.writeNext(stringsToArr(""));
         writer.close();
     }
 
-    private String[] stringsToArr(String ... strings) {
-        return strings;
-    }
+    private void writeLinksToFile(List<Link> links) throws Exception {
+        String record = "";
 
-    private void writeLinksToFile(CSVWriter writer, List<Link> links) {
-        String[] records = new String[2];
-
-        for (Link link: links) {
-            records[0] = link.getName();
-            records[1] = String.valueOf(link.getStatus());
-            writer.writeNext(records);
+        for (Link link : links) {
+            record = "\"" + link.getName() + "\"," + link.getStatus() + "\n";
+            writer.write(record);
         }
     }
 }

@@ -40,11 +40,10 @@ public class Main {
             IHtmlParser htmlParser = new HtmlParser(executor, new LinksValidation());
 
             IParams params = new Params(args);
-            IReport report = new Report(params.getReportName());
             Document doc = new Document("");
 
             for (IParam param : params.getParams()) {
-                LinksSource linksSource = new LinksSource(param.getName());
+                LinksSource linksSource = new LinksSource(param.getName(), param.getType());
                 if (param.getType() == ParamType.Link) {
                     Future<IResponse> response = executor.submit(new Request(new URL(param.getName())));
                     IResponse result = response.get();
@@ -54,7 +53,8 @@ public class Main {
                 }
                 List<Link> links = htmlParser.getLinks(doc, param);
                 linksSource.setLinks(links);
-                report.printToReport(linksSource);
+                Report report = new Report(linksSource);
+                report.printReport();
             }
             executor.shutdown();
         } catch (Exception e) {
