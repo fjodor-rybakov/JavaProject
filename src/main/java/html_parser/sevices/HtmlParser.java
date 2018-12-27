@@ -65,6 +65,9 @@ public class HtmlParser implements IHtmlParser {
         List<String> linksStr = new ArrayList<>();
         for (Element link : links) {
             linksStr.add(link.attr("href"));
+        }
+        links = html.select("img");
+        for (Element link : links) {
             linksStr.add(link.attr("src"));
         }
 

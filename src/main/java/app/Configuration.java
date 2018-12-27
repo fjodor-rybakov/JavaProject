@@ -19,7 +19,6 @@ public class Configuration implements IConfiguration {
 
     }
 
-    @Override
     public List<ITag> getByTagName(String string) {
         List<ITag> result = new ArrayList<>();
 

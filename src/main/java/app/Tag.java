@@ -13,7 +13,6 @@ public class Tag implements ITag {
         this.element = element;
     }
 
-    @Override
     public List<ITag> getByTagName(String string) {
         List<ITag> result = new ArrayList<>();
 
@@ -25,7 +24,6 @@ public class Tag implements ITag {
         return result;
     }
 
-    @Override
     public String getBody() {
         return element.html();
     }

@@ -1,5 +1,6 @@
 package html_parser.models;
 
+import html_parser.enums.ParamType;
 import html_parser.interfaces.ILinksSource;
 
 import java.util.ArrayList;
@@ -7,12 +8,14 @@ import java.util.List;
 
 public class LinksSource implements ILinksSource {
     private String name;
+    private ParamType type;
     private List<Link> brokenLinks = new ArrayList<>();
     private List<Link> normalLinks = new ArrayList<>();
     private List<Link> allLinks = new ArrayList<>();
 
 
-    public LinksSource(String name) {
+    public LinksSource(String name, ParamType type) {
+        this.type = type;
         this.name = name;
     }
 
@@ -43,5 +46,13 @@ public class LinksSource implements ILinksSource {
 
     public String getName() {
         return name;
+    }
+
+    public ParamType getType() {
+        return type;
+    }
+
+    public void setType(ParamType type) {
+        this.type = type;
     }
 }
