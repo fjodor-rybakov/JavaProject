@@ -6,10 +6,12 @@ import html_parser.interfaces.IParam;
 public class Param implements IParam {
     private ParamType type;
     private String name;
+    private String domain;
 
     Param(String name, ParamType type) {
         this.name = name;
         this.type = type;
+        domain = "";
     }
 
     public ParamType getType() {
@@ -19,4 +21,8 @@ public class Param implements IParam {
     public String getName() {
         return name;
     }
+
+    public String getDomain() { return  domain; }
+
+    public void setDomain(String domain) {this.domain = domain;}
 }

@@ -1,6 +1,7 @@
 package html_parser.models;
 
 import java.util.List;
+
 import html_parser.enums.ParamType;
 import html_parser.interfaces.IParam;
 import html_parser.interfaces.IParams;
@@ -30,6 +31,11 @@ public class Params implements IParams {
                         throw new IllegalArgumentException("Print so: *.exe --files|--links <link|file...> --out report.csv");
                     }
                     addParam(arg, mode);
+                    if (mode == ParamType.File) {
+                        mode = ParamType.FileDomain;
+                    } else if (mode == ParamType.FileDomain) {
+                        mode = ParamType.File;
+                    }
             }
         }
     }
@@ -42,7 +48,15 @@ public class Params implements IParams {
             reportName = value.equals("") ? "report" : value;
             return;
         }
-        Param param = new Param(value, mode);
+        IParam param;
+        if (mode == ParamType.FileDomain) {
+            int lastI = params.size() - 1;
+            param = params.get(lastI);
+            params.remove(lastI);
+            param.setDomain(value);
+        } else {
+            param = new Param(value, mode);
+        }
         params.add(param);
     }
 
