@@ -16,7 +16,6 @@ public class Configuration implements IConfiguration {
 
     public Configuration(String configName) throws IOException {
         configuration = Jsoup.parse(new File(configName), "UTF-8");
-
     }
 
     public List<ITag> getByTagName(String string) {

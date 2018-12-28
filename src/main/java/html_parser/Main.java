@@ -26,7 +26,7 @@ import utils.Request;
 import utils.interfaces.IResponse;
 
 public class Main {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             IConfiguration configuration = new Configuration(AppBaseConsts.ConfigFileUri);
             String threadsStr = configuration

@@ -26,7 +26,6 @@ public class HtmlParser implements IHtmlParser {
     public HtmlParser(ExecutorService executor, ILinksValidation linksValidation) {
         this.executor = executor;
         this.linksValidation = linksValidation;
-
     }
 
     public List<Link> getLinks(Document html, IParam param) throws MalformedURLException {
@@ -36,7 +35,14 @@ public class HtmlParser implements IHtmlParser {
         if (param.getType() == ParamType.Link) {
             URL url = new URL(param.getName());
             stringLinks = linksValidation.getValidLinks(stringLinks, url.getProtocol(), url.getHost());
-        } else {
+        } else if (param.getType() == ParamType.File) {
+            System.out.println("DOMAIN: " + param.getDomain());
+            String[] urlParts = param.getDomain().split("//");
+            String protocol = urlParts[0].substring(0, urlParts[0].length() - 1);
+            String domain = urlParts[1];
+            stringLinks = linksValidation.getValidLinks(stringLinks, protocol, domain);
+        }
+        else {
             stringLinks = linksValidation.getValidLinks(stringLinks, "", "");
         }
 
