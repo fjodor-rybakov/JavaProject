@@ -36,7 +36,6 @@ public class HtmlParser implements IHtmlParser {
             URL url = new URL(param.getName());
             stringLinks = linksValidation.getValidLinks(stringLinks, url.getProtocol(), url.getHost());
         } else if (param.getType() == ParamType.File) {
-            System.out.println("DOMAIN: " + param.getDomain());
             String[] urlParts = param.getDomain().split("//");
             String protocol = urlParts[0].substring(0, urlParts[0].length() - 1);
             String domain = urlParts[1];

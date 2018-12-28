@@ -8,7 +8,7 @@ public class Param implements IParam {
     private String name;
     private String domain;
 
-    Param(String name, ParamType type) {
+    public Param(String name, ParamType type) {
         this.name = name;
         this.type = type;
         domain = "";

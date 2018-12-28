@@ -51,8 +51,4 @@ public class LinksSource implements ILinksSource {
     public ParamType getType() {
         return type;
     }
-
-    public void setType(ParamType type) {
-        this.type = type;
-    }
 }
