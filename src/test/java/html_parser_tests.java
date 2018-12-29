@@ -2,18 +2,22 @@ import html_parser.LinksValidation;
 import html_parser.enums.ParamType;
 import html_parser.interfaces.IParam;
 import html_parser.interfaces.IParams;
+import html_parser.interfaces.IReport;
 import html_parser.models.LinksSource;
 import html_parser.models.Param;
 import html_parser.models.Params;
 import html_parser.sevices.HtmlParser;
+import html_parser.sevices.Report;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Test;
 import html_parser.models.Link;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -156,6 +160,43 @@ public class html_parser_tests {
         } catch (Exception ignored) {
         }
     }
+
+    @Test
+    public void PrintReportIfSourceIsFile() {
+        LinksSource source = new LinksSource("index.html", ParamType.File);
+        List<Link> links = new ArrayList<>();
+        links.add(new Link("link", 200));
+        source.setLinks(links);
+        try {
+            IReport report = new Report(source);
+            report.printReport();
+
+            Scanner scanner = new Scanner(new File("index.csv"));
+            String result = scanner.nextLine();
+
+            assertEquals("\"link\",200", result);
+        } catch (Exception ignored) {
+        }
+    }
+
+    @Test
+    public void PrintReportIfSourceIsLink() {
+        LinksSource source = new LinksSource("https://link.com", ParamType.File);
+        List<Link> links = new ArrayList<>();
+        links.add(new Link("link", 200));
+        source.setLinks(links);
+        try {
+            IReport report = new Report(source);
+            report.printReport();
+
+            Scanner scanner = new Scanner(new File("link.csv"));
+            String result = scanner.nextLine();
+
+            assertEquals("\"link\",200", result);
+        } catch (Exception ignored) {
+        }
+    }
+
 
     @Test
     public void shouldGetAllLinks() {

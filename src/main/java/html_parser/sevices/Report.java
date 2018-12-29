@@ -18,17 +18,6 @@ public class Report implements IReport {
         writer = new FileWriter(getFileName());
     }
 
-    private String getFileName() {
-        String filename = "";
-        if (linksSource.getType() == ParamType.Link) {
-            filename = linksSource.getName().split("//")[1].split("\\.")[0];
-        } else {
-            filename = linksSource.getName().split("\\.")[0];
-        }
-        filename += ".csv";
-        return filename;
-    }
-
     public void printReport() throws Exception {
         List<Link> normalLinks = linksSource.getNormalLinks();
         List<Link> brokenLinks = linksSource.getBrokenLinks();
@@ -41,6 +30,17 @@ public class Report implements IReport {
             writeLinksToFile(brokenLinks);
         }
         writer.close();
+    }
+
+    private String getFileName() {
+        String filename = "";
+        if (linksSource.getType() == ParamType.Link) {
+            filename = linksSource.getName().split("//")[1].split("\\.")[0];
+        } else {
+            filename = linksSource.getName().split("\\.")[0];
+        }
+        filename += ".csv";
+        return filename;
     }
 
     private void writeLinksToFile(List<Link> links) throws Exception {
