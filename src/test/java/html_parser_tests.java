@@ -1,3 +1,6 @@
+import app.AppBaseConsts;
+import app.Configuration;
+import app.interfaces.IConfiguration;
 import html_parser.LinksValidation;
 import html_parser.enums.ParamType;
 import html_parser.interfaces.IParam;
@@ -14,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import html_parser.models.Link;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -194,6 +198,21 @@ public class html_parser_tests {
 
             assertEquals("\"link\",200", result);
         } catch (Exception ignored) {
+        }
+    }
+
+    @Test
+    public void GetThreadsCountFromConfiguration() {
+        try {
+            IConfiguration configuration = new Configuration("src/test/java/properties.test.xml");
+            String threadsStr = configuration
+                    .getByTagName("app-settings")
+                    .get(0)
+                    .getByTagName("thread-pools")
+                    .get(0)
+                    .getBody();
+            assertEquals("3", threadsStr);
+        } catch (IOException ignored) {
         }
     }
 
