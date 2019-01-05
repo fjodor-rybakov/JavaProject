@@ -39,6 +39,7 @@ public class Report implements IReport {
         } else {
             filename = linksSource.getName().split("\\.")[0];
         }
+        filename = filename.replaceAll("/|:", ".");
         filename += ".csv";
         return filename;
     }

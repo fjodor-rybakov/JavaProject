@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Params implements IParams {
     private List<IParam> params;
-    private String reportName = "";
 
     public Params(String[] args) {
         params = new ArrayList<>();
@@ -22,9 +21,6 @@ public class Params implements IParams {
                     break;
                 case ("--links"):
                     mode = ParamType.Link;
-                    break;
-                case ("--out"):
-                    mode = ParamType.OutFile;
                     break;
                 default:
                     if (mode == null) {
@@ -41,16 +37,9 @@ public class Params implements IParams {
     }
 
     private void addParam(String value, ParamType mode) {
-        if (mode == ParamType.OutFile) {
-            if (!reportName.equals("")) {
-                throw new IllegalArgumentException("Out file can be only single");
-            }
-            reportName = value.equals("") ? "report" : value;
-            return;
-        }
         IParam param;
         if (mode == ParamType.FileDomain) {
-            int lastI = params.size() - 1;
+            int lastI = params.size() == 0 ? 0: params.size() - 1;
             param = params.get(lastI);
             params.remove(lastI);
             param.setDomain(value);
@@ -62,9 +51,5 @@ public class Params implements IParams {
 
     public List<IParam> getParams() {
         return params;
-    }
-
-    public String getReportName() {
-        return reportName;
     }
 }

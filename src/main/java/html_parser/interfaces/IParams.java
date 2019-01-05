@@ -4,5 +4,4 @@ import java.util.List;
 
 public interface IParams {
     List<IParam> getParams();
-    String getReportName();
 }
