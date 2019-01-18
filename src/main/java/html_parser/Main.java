@@ -55,7 +55,7 @@ public class Main {
                         System.out.println(param.getName() + " body is empty");
                         continue;
                     }
-                    doc = Jsoup.parse(result.getBody(), "UTF-8", "");
+                    doc = result.getBody();
                 } else if (param.getType() == ParamType.File) {
                     doc = Jsoup.parse(new File(param.getName()), "UTF-8");
                 }

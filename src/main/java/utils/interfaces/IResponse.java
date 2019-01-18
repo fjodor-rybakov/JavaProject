@@ -1,9 +1,11 @@
 package utils.interfaces;
 
+import org.jsoup.nodes.Document;
+
 import java.io.InputStream;
 
 public interface IResponse {
-    InputStream getBody();
+    Document getBody();
     int getStatusCode();
     String getURL();
 }

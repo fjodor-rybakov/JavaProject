@@ -35,7 +35,7 @@ public class Report implements IReport {
     private String getFileName() {
         String filename = "";
         if (linksSource.getType() == ParamType.Link) {
-            filename = linksSource.getName().split("//")[1].split("\\.")[0];
+            filename = linksSource.getName().split("//")[1].split("\\/")[0];
         } else {
             filename = linksSource.getName().split("\\.")[0];
         }
