@@ -14,7 +14,9 @@ import utils.interfaces.IResponse;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -31,7 +33,8 @@ public class HtmlParser implements IHtmlParser {
     public List<Link> getLinks(Document html, IParam param) throws MalformedURLException {
         List<Link> result = new ArrayList<>();
 
-        List<String> stringLinks = getStringLinks(html);
+        Set<String> uniqueListLinks = new HashSet<>(getStringLinks(html));
+        List<String> stringLinks = new ArrayList<>(uniqueListLinks);
         if (param.getType() == ParamType.Link) {
             URL url = new URL(param.getName());
             stringLinks = linksValidation.getValidLinks(stringLinks, url.getProtocol(), url.getHost());
