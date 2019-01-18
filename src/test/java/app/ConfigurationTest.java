@@ -13,10 +13,8 @@ class ConfigurationTest {
         try {
             IConfiguration configuration = new Configuration("src/test/java/properties.test.xml");
             String threadsStr = configuration
-                    .getByTagName("app-settings")
-                    .get(0)
-                    .getByTagName("thread-pools")
-                    .get(0)
+                    .getSingleByTagName("app-settings")
+                    .getSingleByTagName("thread-pools")
                     .getBody();
             assertEquals("3", threadsStr);
         } catch (IOException ignored) {

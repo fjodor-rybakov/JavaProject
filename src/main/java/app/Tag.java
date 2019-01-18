@@ -13,7 +13,7 @@ public class Tag implements ITag {
         this.element = element;
     }
 
-    public List<ITag> getByTagName(String string) {
+    public ITag getSingleByTagName(String string) {
         List<ITag> result = new ArrayList<>();
 
         List<Element> elements = element.select(string);
@@ -21,7 +21,11 @@ public class Tag implements ITag {
             result.add(new Tag(tag));
         }
 
-        return result;
+        if (result.size() == 0) {
+            return null;
+        }
+
+        return result.get(0);
     }
 
     public String getBody() {

@@ -11,6 +11,7 @@ import java.util.concurrent.Future;
 import app.AppBaseConsts;
 import app.Configuration;
 import app.interfaces.IConfiguration;
+import app.interfaces.ITag;
 import html_parser.enums.ParamType;
 import html_parser.interfaces.IHtmlParser;
 import html_parser.interfaces.IParam;
@@ -30,12 +31,14 @@ public class Main {
     public static void main(String[] args) {
         try {
             IConfiguration configuration = new Configuration(AppBaseConsts.ConfigFileUri);
-            String threadsStr = configuration
-                    .getByTagName("app-settings")
-                    .get(0)
-                    .getByTagName("thread-pools")
-                    .get(0)
-                    .getBody();
+            ITag threadsCountTag = configuration
+                    .getSingleByTagName("app-settings")
+                    .getSingleByTagName("thread-pools");
+            if (threadsCountTag == null) {
+                throw new IllegalArgumentException("Thread config is incorrect");
+            }
+
+            String threadsStr = threadsCountTag.getBody();
             int threads = Integer.parseInt(threadsStr);
             ExecutorService executor = Executors.newFixedThreadPool(threads);
             IHtmlParser htmlParser = new HtmlParser(executor, new LinksValidation());
@@ -49,7 +52,7 @@ public class Main {
                     Future<IResponse> response = executor.submit(new Request(new URL(param.getName())));
                     IResponse result = response.get();
                     if (result.getBody() == null) {
-                        System.out.println( param.getName() + " body is null");
+                        System.out.println(param.getName() + " body is empty");
                         continue;
                     }
                     doc = Jsoup.parse(result.getBody(), "UTF-8", "");

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 public class Request implements IRequest {
     private URL url;
@@ -23,11 +24,13 @@ public class Request implements IRequest {
 
     private void writeResult() {
         try {
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
+            HttpURLConnection.setFollowRedirects(false);
+            URLConnection connection =  url.openConnection();
+            connection.setConnectTimeout(3000);
+            connection.setReadTimeout(3000);
             connection.connect();
             body = connection.getInputStream();
-            statusCode = connection.getResponseCode();
+            statusCode = ((HttpURLConnection) connection).getResponseCode();
         } catch (IOException e) {
             statusCode = 500;
             body = null;
